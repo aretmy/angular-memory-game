@@ -1,0 +1,19 @@
+<div class="settings row">
+	<div class="form-group col-lg-3">
+		<label> Width </label>
+		<input class="form-control" type="number" ng-model="gameOptions.width" min="2" max="8"/>
+	</div>
+
+	<div class="form-group col-lg-3">
+		<label> Height </label>
+		<input class="form-control" type="number" ng-model="gameOptions.height" min="2" max="8"/>
+	</div>
+
+	<div class="form-group col-lg-3">
+		<label> Count </label>
+		<input class="form-control" type="number" ng-model="gameOptions.count" min="2" max="9"/>
+	</div>
+</div>
+
+<a class="btn btn-primary" ng-click="createGame()"> Create game </a>
+

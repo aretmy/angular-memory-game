@@ -1,0 +1,51 @@
+.row {
+
+}
+
+.cell {
+	width: 32px;
+	height: 32px;
+	float: left;
+}
+
+.cell > span {
+	margin: 2px;
+	width: 28px;
+	height: 28px;
+	display: block;
+
+	cursor: pointer;
+	text-align: center;
+}
+
+.closed {
+	background-color: #000;
+}
+
+.piece-0 {
+	background-color: #00f;
+}
+.piece-1 {
+	background-color: #0f0;
+}
+.piece-2 {
+	background-color: #0ff;
+}
+.piece-3 {
+	background-color: #f00;
+}
+.piece-4 {
+	background-color: #f0f;
+}
+.piece-5 {
+	background-color: #ff0;
+}
+.piece-6 {
+	background-color: #fff;
+}
+.piece-7 {
+	background-color: #ff8;
+}
+.piece-8 {
+	background-color: #f8f;
+}

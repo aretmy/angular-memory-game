@@ -1,0 +1,15 @@
+<h1>Game</h1>
+<div class="field" ng-if="created = true">
+	<div ng-repeat="row in game.getRows()" class="row">
+		<div ng-repeat="cell in row" class="cell">
+			<span
+				ng-click="open(cell)"
+				ng-class="{ 'opened': cell.opened }"
+				class="{{ cell.opened ? 'piece-' + cell.elem : 'closed' }}"></span>
+		</div>
+	</div>
+</div>
+<p>
+	Ходов: {{ game.getTurnsCount() }}
+	Открыто: {{ game.getOpenedCount() }}
+</p>
