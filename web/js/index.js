@@ -1,16 +1,48 @@
-angular.module('game', ['gameMemory', 'ngRoute'])
-  .config(['$routeProvider', function($routeProvider) {
-    $routeProvider.when('/', {
-        controller: 'HtmlCtrl',
-        templateUrl: 'templates/index.html'
+angular.module('game', ['gameMemory', 'ui.router'])
+  .config(['$stateProvider', function($stateProvider) {
+    $stateProvider
+      .state('index', {
+        url: '/',
+        views: {
+          viewA: { templateUrl: 'templates/hero.html' },
+          viewB: { templateUrl: 'templates/causes.html'}
+        }
       })
-      .when('/game', {
-        controller: 'GameCtrl',
-        templateUrl: 'templates/game.html'
+      .state('famehall', {
+        url: '/famehall',
+        views: {
+          viewA: {
+            controller: 'FamehallCtrl',
+            templateUrl: 'templates/famehall.html'
+          }
+        }
       })
-      .when('/finish', {
-        controller: 'FinishCtrl',
-        templateUrl: 'templates/finish.html'
+      .state('game', {
+        url: '/game',
+        views: {
+          viewA: {
+            controller: 'HtmlCtrl',
+            templateUrl: 'templates/index.html'
+          }
+        }
+      })
+      .state('gameStarted', {
+        url: '/start',
+        views: {
+          viewA: {
+            controller: 'GameCtrl',
+            templateUrl: 'templates/game.html'
+          }
+        }
+      })
+      .state('gameFinished', {
+        url: '/finished',
+        views: {
+          viewA: {
+            controller: 'FinishCtrl',
+            templateUrl: 'templates/finish.html'
+          }
+        }
       });
   }])
   .factory('shared', [function() {
@@ -29,7 +61,7 @@ angular.module('game', ['gameMemory', 'ngRoute'])
 
     };
   }])
-  .factory('gameManager', ['shared', '$location', '$timeout', 'Game', function(shared, $location, $timeout, Game) {
+  .factory('gameManager', ['shared', '$state', '$timeout', 'Game', function(shared, $state, $timeout, Game) {
      return {
        getOptions: function() {
          return shared.get('options', Game.getDefaults());
@@ -38,34 +70,40 @@ angular.module('game', ['gameMemory', 'ngRoute'])
          var game = this.game = new Game(options);
          shared.set('options', options);
          game.generate();
-         $location.path('/game');
+         $state.go('gameStarted');
        },
        getGame: function() {
          if(!this.game) {
-           $location.path('/');
+           $state.go('game');
            return;
          }
          return this.game;
        },
        openCell: function(cell) {
          if(!this.game) {
-           $location.path('/');
+           $state.go('game');
            return;
          }
          this.game.open(cell);
 
          if(this.game.finished) {
            $timeout(function() {
-             $location.path('/finish');
+             $state.go('gameFinished');
            }, 2000);
          }
        },
        assertFinished: function() {
          if(!this.game || !this.game.finished) {
-           $location.path('/');
+           $state.go('game');
          }
        }
      };
+  }])
+  .controller('MenuCtrl', ['$scope', function($scope) {
+
+  }])
+  .controller('FamehallCtrl', ['$scope', function($scope) {
+
   }])
   .controller('HtmlCtrl', ['$scope', 'gameManager', function ($scope, gameManager) {
     $scope.gameOptions = gameManager.getOptions();

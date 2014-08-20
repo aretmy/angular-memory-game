@@ -1,21 +1,42 @@
 <html ng-app="game">
-	<head>
-		<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-		<script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.2.0/js/bootstrap.min.js"></script>
-		<script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.20/angular.js"></script>
-		<script src="https://code.angularjs.org/1.2.22/angular-route.js"></script>
-		<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.2.0/css/bootstrap.css"/>
-		<link rel="stylesheet" href="css/style.css"/>
+<head>
+	<meta charset="utf8"/>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.2.0/js/bootstrap.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.20/angular.js"></script>
+	<!--<script src="//code.angularjs.org/1.2.22/angular-route.js"></script>-->
+	<script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.10/angular-ui-router.js"></script>
+	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.2.0/css/bootstrap.css"/>
+	<link rel="stylesheet" href="css/style.css"/>
 
-		<script src="js/game.js"></script>
-		<script src="js/index.js"></script>
-	</head>
-	<body ng-app="game">
-
+	<script src="js/game.js"></script>
+	<script src="js/index.js"></script>
+</head>
+<body ng-app="game">
+	<div class="navbar navbar-inverse navbar-fixed-top" role="navigation" ng-controller="MenuCtrl">
 		<div class="container">
-			<notifications></notifications>
-			<div ng-view></div>
+			<div class="navbar-header">
+				<a class="navbar-brand" ui-sref="index">Память</a>
+			</div>
+			<div class="navbar-collapse collapse">
+				<ul class="nav navbar-nav">
+					<li><a ui-sref="index">Главная</a></li>
+					<li><a ui-sref="game">Игра</a></li>
+					<li><a ui-sref="famehall">Зал славы</a></li>
+				</ul>
+			</div>
 		</div>
-
-	</body>
+	</div>
+	<div class="container" role="main" style="margin-top: 60px;">
+		<div ui-view="viewA"></div>
+	</div>
+	<div class="container">
+		<div ui-view="viewB"></div>
+		<footer>
+			<p>© aretmy 2014</p>
+		</footer>
+	</div>
+</body>
 </html>
+
+</body>
