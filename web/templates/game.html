@@ -5,7 +5,7 @@
 			<span
 				ng-click="open(cell)"
 				ng-class="{ 'opened': cell.opened }"
-				class="{{ cell.opened ? 'piece-' + cell.elem : 'closed' }}"></span>
+				class="piece {{ cell.opened ? 'piece-' + cell.elem : 'closed' }}"></span>
 		</div>
 	</div>
 </div>

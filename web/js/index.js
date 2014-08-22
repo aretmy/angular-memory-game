@@ -1,5 +1,6 @@
 angular.module('game', ['gameMemory', 'ui.router'])
-  .config(['$stateProvider', function($stateProvider) {
+  .config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
+    $urlRouterProvider.otherwise('/');
     $stateProvider
       .state('index', {
         url: '/',
@@ -14,6 +15,22 @@ angular.module('game', ['gameMemory', 'ui.router'])
           viewA: {
             controller: 'FamehallCtrl',
             templateUrl: 'templates/famehall.html'
+          }
+        }
+      })
+      .state('famehall.speed', {
+        url: '/speed/:page',
+        views: {
+          viewA: {
+            templateUrl: 'templates/famehall.speed.html'
+          }
+        }
+      })
+      .state('famehall.strict', {
+        url: '/strict/:page',
+        views: {
+          viewA: {
+            templateUrl: 'templates/famehall.strict.html'
           }
         }
       })
@@ -99,11 +116,38 @@ angular.module('game', ['gameMemory', 'ui.router'])
        }
      };
   }])
-  .controller('MenuCtrl', ['$scope', function($scope) {
-
+  .directive('menuItem', ['$state', '$rootScope', function($state, $rootScope) {
+    return {
+      restrict: 'A',
+      link: function(scope, elem, attrs) {
+        $rootScope.$on('$stateChangeSuccess', function() {
+          if($state.includes(attrs.uiSref)) {
+            elem.parent().addClass('active');
+          } else {
+            elem.parent().removeClass('active');
+          }
+        });
+      }
+    }
   }])
-  .controller('FamehallCtrl', ['$scope', function($scope) {
+  .controller('FamehallCtrl', ['$scope', '$state', '$stateParams', function($scope, $state, $stateParams) {
+    $scope.users = [];
+    console.log($stateParams);
+    if($state.is('famehall.speed')) {
+      $scope.users = [
+        {
+          name: 'Artyom',
+          time: '1:45'
+        }
+      ];
+    } else if($state.is('famehall.strict')) {
+      $scope.users = [
+        {
+          name: 'Artyom',
 
+        }
+      ]
+    }
   }])
   .controller('HtmlCtrl', ['$scope', 'gameManager', function ($scope, gameManager) {
     $scope.gameOptions = gameManager.getOptions();

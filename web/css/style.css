@@ -3,15 +3,15 @@
 }
 
 .cell {
-	width: 32px;
-	height: 32px;
+	width: 64px;
+	height: 64px;
 	float: left;
 }
 
 .cell > span {
 	margin: 2px;
-	width: 28px;
-	height: 28px;
+	width: 62px;
+	height: 62px;
 	display: block;
 
 	cursor: pointer;
@@ -21,31 +21,37 @@
 .closed {
 	background-color: #000;
 }
-
+.piece {
+	background-size: 62px;
+}
 .piece-0 {
-	background-color: #00f;
+	background-image: url(../images/flowers/1.png);
 }
 .piece-1 {
-	background-color: #0f0;
+	background-image: url(../images/flowers/2.png);
 }
 .piece-2 {
-	background-color: #0ff;
+	background-image: url(../images/flowers/3.png);
 }
 .piece-3 {
-	background-color: #f00;
+	background-image: url(../images/flowers/4.png);
 }
 .piece-4 {
-	background-color: #f0f;
+	background-image: url(../images/flowers/5.png);
 }
 .piece-5 {
-	background-color: #ff0;
+	background-image: url(../images/flowers/6.png);
 }
 .piece-6 {
-	background-color: #fff;
+	background-image: url(../images/flowers/7.png);
 }
 .piece-7 {
-	background-color: #ff8;
+	background-image: url(../images/flowers/8.png);
 }
 .piece-8 {
-	background-color: #f8f;
+	background-image: url(../images/flowers/9.png);
+}
+
+.piece-9 {
+	background-image: url(../images/flowers/10.png);
 }
