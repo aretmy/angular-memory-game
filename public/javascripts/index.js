@@ -1,4 +1,4 @@
-angular.module('game', ['gameMemory', 'ui.router'])
+angular.module('game', ['gameMemory', 'ui.router', 'ngAnimate'])
   .config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise('/');
     $stateProvider
@@ -70,7 +70,7 @@ angular.module('game', ['gameMemory', 'ui.router'])
 
     };
   }])
-  .factory('gameManager', ['shared', '$state', '$timeout', 'Game', '$http', function(shared, $state, $timeout, Game, $http) {
+  .factory('gameManager', ['shared', '$state', '$timeout', 'Game', '$http', 'styles', function(shared, $state, $timeout, Game, $http, styles) {
      return {
        getOptions: function() {
          return shared.get('options', Game.getDefaults());
@@ -110,7 +110,7 @@ angular.module('game', ['gameMemory', 'ui.router'])
          return $http({method: 'GET', url: 'data/famehall.json'});
        },
        getStyles: function() {
-         return Game.styles;
+         return styles;
        },
        getModes: function(style) {
          var modes = Game.getModes(style),
@@ -149,13 +149,14 @@ angular.module('game', ['gameMemory', 'ui.router'])
       }
     }
   }])
-  .directive('myTitle', [function() {
-    return {
-      restrict: 'A',
-      scope: '=',
-      link: function(scope, elem, attrs) {
-        elem.attr('title', attrs.myTitle);
-      }
+  .filter('modeButtonClass', [function() {
+    var cssClasses = {
+      easy: 'btn-default',
+      middle: 'btn-success',
+      hard: 'btn-danger'
+    };
+    return function(section) {
+      return cssClasses[section];
     }
   }])
   .controller('FamehallCtrl', ['$scope', 'gameManager', function($scope, gameManager) {

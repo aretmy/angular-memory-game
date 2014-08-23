@@ -1,0 +1,44 @@
+[
+  {
+    "width": 2,
+    "height": 2,
+    "name": "Легкая игра",
+    "minCount": 2,
+    "section": "easy"
+  },
+  {
+    "width": 4,
+    "height": 4,
+    "name": "Легкая игра",
+    "minCount": 8,
+    "section": "easy"
+  },
+  {
+    "width": 6,
+    "height": 5,
+    "name": "Средняя игра",
+    "minCount": 15,
+    "section": "middle"
+  },
+  {
+    "width": 6,
+    "height": 6,
+    "name": "Средняя игра",
+    "minCount": 18,
+    "section": "middle"
+  },
+  {
+    "width": 8,
+    "height": 8,
+    "name": "Сложная игра",
+    "minCount": 32,
+    "section": "hard"
+  },
+  {
+    "width": 9,
+    "height": 8,
+    "name": "Сложная игра",
+    "minCount": 36,
+    "section": "hard"
+  }
+]

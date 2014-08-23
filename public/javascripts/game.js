@@ -6,6 +6,9 @@ angular.module('gameMemory', [])
       this.second = null;
       this.turnsCount = 0;
       this.openedCount = 0;
+
+      this.fresh = null;
+      this.lucky = null;
     }
 
     OpenCommand.prototype = {
@@ -21,24 +24,41 @@ angular.module('gameMemory', [])
       openFirst: function(cell) {
         var self = this;
         cell.opened = true;
-        cell.beenOpen = true;
         this.first = cell;
         return false;
       },
       openSecond: function(cell) {
+        var self = this;
+
         if(cell === this.first) {
           return false;
         }
         this.second = cell;
         cell.opened = true;
+
+        var lucky = !this.first.beenOpen && !cell.beenOpen;
+
         cell.beenOpen = true;
+        this.first.beenOpen = true;
         if(this.first.elem == cell.elem) {
+
           this.first = null;
           this.second = null;
           this.openedCount++;
+          this.fresh = cell.elem;
+
+          if(lucky) {
+            this.lucky = cell.elem;
+            $timeout(function() {
+              self.lucky = null;
+            }, 2000);
+          }
+
+          $timeout(function() {
+            self.fresh = null;
+          }, 2000);
           return true;
         }
-        var self = this;
         $timeout(function() {
           self.first.opened = false;
           self.second.opened = false;
@@ -52,7 +72,9 @@ angular.module('gameMemory', [])
 
     return OpenCommand;
   }])
-  .factory('Game', ['OpenCommand', '$interval', function (OpenCommand, $interval) {
+  .value('styles', [])
+  .value('modes', [])
+  .factory('Game', ['OpenCommand', '$interval', 'styles', 'modes', function (OpenCommand, $interval, styles, modes) {
 
     var map = [],
         defaults = {
@@ -67,7 +89,7 @@ angular.module('gameMemory', [])
       this.width = options.width;
       this.height = options.height;
       this.count = this.width * this.height / 2;
-      this.style = Game.styles[options.style];
+      this.style = styles[options.style];
 
       this.options = {
         width: this.width,
@@ -167,89 +189,27 @@ angular.module('gameMemory', [])
         $interval.cancel(this.interval);
       }
 
+      this.hasFreshOpened = function() {
+        return this.command.fresh !== null;
+      }
+
+      this.getFreshOpened = function() {
+        return this.command.fresh;
+      }
     }
 
     Game.getDefaults = function() {
       return angular.copy(defaults);
     }
 
-    Game.styles = {
-      summer: {
-        name: 'summer',
-        count: 20,
-        description: 'Лето'
-      },
-      food: {
-        name: 'food',
-        count: 20,
-        description: 'Еда'
-      },
-      summerFood: {
-        name: 'summer-food',
-        count: 40,
-        description: 'Лето и еда'
-      }
-    };
-
-    Game.modes = [
-      {
-        width: 2,
-        height: 2,
-        name: 'Легкая игра',
-        cssClass: 'btn-info',
-        minCount: 2,
-        section: 'easy'
-      },
-      {
-        width: 4,
-        height: 4,
-        name: 'Легкая игра',
-        cssClass: 'btn-info',
-        minCount: 8,
-        section: 'easy'
-      },
-      {
-        width: 6,
-        height: 5,
-        name: 'Средняя игра',
-        cssClass: 'btn-success',
-        minCount: 15,
-        section: 'middle'
-      },
-      {
-        width: 6,
-        height: 6,
-        name: 'Средняя игра',
-        cssClass: 'btn-success',
-        minCount: 18,
-        section: 'middle'
-      },
-      {
-        width: 8,
-        height: 8,
-        name: 'Сложная игра',
-        cssClass: 'btn-danger',
-        minCount: 32,
-        section: 'hard'
-      },
-      {
-        width: 9,
-        height: 8,
-        name: 'Сложная игра',
-        cssClass: 'btn-danger',
-        minCount: 36,
-        section: 'hard'
-      }
-    ];
-
     Game.getModes = function(style) {
       var result = [];
-      style = Game.styles[style];
+      style = styles[style];
       if(!style) {
         return result;
       }
 
-      for(var i = 0, mode; mode = Game.modes[i]; i++) {
+      for(var i = 0, mode; mode = modes[i]; i++) {
         if(mode.minCount <= style.count) {
           result.push(mode);
         }
