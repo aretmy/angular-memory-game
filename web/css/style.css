@@ -10,8 +10,10 @@
 
 .cell > span {
 	margin: 2px;
-	width: 62px;
-	height: 62px;
+	width: 60px;
+	height: 60px;
+	border-radius: 30px;
+
 	display: block;
 
 	cursor: pointer;
@@ -19,39 +21,33 @@
 }
 
 .closed {
-	background-color: #000;
-}
-.piece {
-	background-size: 62px;
-}
-.piece-0 {
-	background-image: url(../images/flowers/1.png);
-}
-.piece-1 {
-	background-image: url(../images/flowers/2.png);
-}
-.piece-2 {
-	background-image: url(../images/flowers/3.png);
-}
-.piece-3 {
-	background-image: url(../images/flowers/4.png);
-}
-.piece-4 {
-	background-image: url(../images/flowers/5.png);
-}
-.piece-5 {
-	background-image: url(../images/flowers/6.png);
-}
-.piece-6 {
-	background-image: url(../images/flowers/7.png);
-}
-.piece-7 {
-	background-image: url(../images/flowers/8.png);
-}
-.piece-8 {
-	background-image: url(../images/flowers/9.png);
+	background-image: none !important;
+	background-color: #000 !important;
 }
 
-.piece-9 {
-	background-image: url(../images/flowers/10.png);
+.been-open {
+	background-image: none !important;
+	background-color: #aaa !important;
 }
+
+.summer { background: url('../images/summer/60/sprite.png') no-repeat top left; width: 60px; height: 60px;  }
+.summer.image-0 { background-position: 0px 0px;  }
+.summer.image-1 { background-position: -60px 0px;  }
+.summer.image-2 { background-position: -120px 0px;  }
+.summer.image-3 { background-position: -180px 0px;  }
+.summer.image-4 { background-position: -240px 0px;  }
+.summer.image-5 { background-position: -300px 0px;  }
+.summer.image-6 { background-position: -360px 0px;  }
+.summer.image-7 { background-position: -420px 0px;  }
+.summer.image-8 { background-position: -480px 0px;  }
+.summer.image-9 { background-position: -540px 0px;  }
+.summer.image-10 { background-position: -600px 0px;  }
+.summer.image-11 { background-position: -660px 0px;  }
+.summer.image-12 { background-position: -720px 0px;  }
+.summer.image-13 { background-position: -780px 0px;  }
+.summer.image-14 { background-position: -840px 0px;  }
+.summer.image-15 { background-position: -900px 0px;  }
+.summer.image-16 { background-position: -960px 0px;  }
+.summer.image-17 { background-position: -1020px 0px;  }
+.summer.image-18 { background-position: -1080px 0px;  }
+.summer.image-19 { background-position: -1140px 0px;  }

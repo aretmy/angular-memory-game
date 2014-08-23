@@ -1,4 +1,20 @@
-Лучшие по точности:
-<ul>
-	<li ng-repeat="user in users"> {{ user.name }} - {{ user.openedCount }} / {{ user.turnsCount }}</li>
-</ul>
+<h2>Лучшие по точности:</h2>
+<table class="table">
+	<thead>
+		<tr>
+			<th> Имя игрока </th>
+			<th> Открыто ячеек </th>
+			<th> Число ходов </th>
+			<th> Режим игры </th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr ng-repeat="user in famehall.strict">
+			<td> {{ user.name }} </td>
+			<td> {{ user.openedCount }}</td>
+			<td> {{ user.turnsCount }}</td>
+			<td> Размер: {{ user.mode.width }}x{{user.mode.height}} Ячеек: {{user.mode.count}}</td>
+		</tr>
+	</tbody>
+</table>
+Также смотрите <a ui-sref="famehall.speed({page: 1})">лучших по скорости</a>

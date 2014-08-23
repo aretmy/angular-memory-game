@@ -1,20 +1,26 @@
 <div class="settings row">
 	<h1> Игра "Память" </h1>
-	<span class="help-block"> Создайте игру с нужными параметрами </span>
-	<div class="form-group col-sm-2">
-		<label> Ширина игрового поля </label>
-		<input class="form-control" type="number" ng-model="gameOptions.width" min="2" max="8"/>
-	</div>
+	<span class="help-block"> Выберите тип игры </span>
 
-	<div class="form-group col-sm-2">
-		<label> Высота игрового поля </label>
-		<input class="form-control" type="number" ng-model="gameOptions.height" min="2" max="8"/>
+	<div class="row">
+		<div class="col-lg-3">
+			<a class="btn btn-info btn-lg btn-block" ng-click="createGame({ width: 2, height: 2})"> Легкая игра (2x2)</a>
+		</div>
+		<div class="col-lg-3">
+			<a class="btn btn-info btn-lg btn-block" ng-click="createGame({ width: 4, height: 4})"> Легкая игра (4x4)</a>
+		</div>
 	</div>
+	<hr/>
+	<div class="row">
+		<div class="col-lg-3">
+			<a class="btn btn-default btn-lg btn-block" ng-click="createGame({ width: 5, height: 6})"> Средняя игра (5x6)</a>
+		</div>
+		<div class="col-lg-3">
+			<a class="btn btn-success btn-lg btn-block" ng-click="createGame({ width: 6, height: 6})"> Сложная игра (6x6)</a>
+		</div>
+	</div>
+	<hr/>
 
-	<div class="form-group col-sm-2">
-		<label> Число элементов </label>
-		<input class="form-control" type="number" ng-model="gameOptions.count" min="2" max="9"/>
-	</div>
 </div>
 
 <a class="btn btn-primary" ng-click="createGame()"> Начать игру </a>

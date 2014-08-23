@@ -1,4 +1,16 @@
-Лучшие по скорости:
-<ul>
-	<li ng-repeat="user in users"> {{ user.name }} - {{ user.time }}</li>
-</ul>
+<h2>Лучшие по скорости:</h2>
+<table class="table">
+	<thead>
+		<th>Имя игрока</th>
+		<th>Время игры</th>
+		<th>Режим игры</th>
+	</thead>
+	<tbody>
+		<tr ng-repeat="user in famehall.speed">
+			<td>{{ user.name }}</td>
+			<td> {{ user.time }}</td>
+			<td> Размер: {{ user.mode.width }}x{{user.mode.height}} Ячеек: {{user.mode.count}} <a ng-click="goToGame(user.mode)">Превзойти</a></td>
+		</tr>
+	</tbody>
+</table>
+Также смотрите <a ui-sref="famehall.strict({page: 1})">лучших по точности</a>

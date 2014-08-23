@@ -20,19 +20,11 @@ angular.module('game', ['gameMemory', 'ui.router'])
       })
       .state('famehall.speed', {
         url: '/speed/:page',
-        views: {
-          viewA: {
-            templateUrl: 'templates/famehall.speed.html'
-          }
-        }
+        templateUrl: 'templates/famehall.speed.html'
       })
       .state('famehall.strict', {
         url: '/strict/:page',
-        views: {
-          viewA: {
-            templateUrl: 'templates/famehall.strict.html'
-          }
-        }
+        templateUrl: 'templates/famehall.strict.html'
       })
       .state('game', {
         url: '/game',
@@ -44,7 +36,7 @@ angular.module('game', ['gameMemory', 'ui.router'])
         }
       })
       .state('gameStarted', {
-        url: '/start',
+        url: '/game/start',
         views: {
           viewA: {
             controller: 'GameCtrl',
@@ -53,7 +45,7 @@ angular.module('game', ['gameMemory', 'ui.router'])
         }
       })
       .state('gameFinished', {
-        url: '/finished',
+        url: '/game/finished',
         views: {
           viewA: {
             controller: 'FinishCtrl',
@@ -78,7 +70,7 @@ angular.module('game', ['gameMemory', 'ui.router'])
 
     };
   }])
-  .factory('gameManager', ['shared', '$state', '$timeout', 'Game', function(shared, $state, $timeout, Game) {
+  .factory('gameManager', ['shared', '$state', '$timeout', 'Game', '$http', function(shared, $state, $timeout, Game, $http) {
      return {
        getOptions: function() {
          return shared.get('options', Game.getDefaults());
@@ -113,6 +105,9 @@ angular.module('game', ['gameMemory', 'ui.router'])
          if(!this.game || !this.game.finished) {
            $state.go('game');
          }
+       },
+       loadFamehall: function() {
+         return $http({method: 'GET', url: 'data/famehall.json'});
        }
      };
   }])
@@ -130,35 +125,25 @@ angular.module('game', ['gameMemory', 'ui.router'])
       }
     }
   }])
-  .controller('FamehallCtrl', ['$scope', '$state', '$stateParams', function($scope, $state, $stateParams) {
-    $scope.users = [];
-    console.log($stateParams);
-    if($state.is('famehall.speed')) {
-      $scope.users = [
-        {
-          name: 'Artyom',
-          time: '1:45'
-        }
-      ];
-    } else if($state.is('famehall.strict')) {
-      $scope.users = [
-        {
-          name: 'Artyom',
+  .controller('FamehallCtrl', ['$scope', 'gameManager', function($scope, gameManager) {
+    $scope.famehall = {};
 
-        }
-      ]
-    }
-  }])
-  .controller('HtmlCtrl', ['$scope', 'gameManager', function ($scope, gameManager) {
-    $scope.gameOptions = gameManager.getOptions();
+    gameManager.loadFamehall().success(function(results) {
+      $scope.famehall = results;
+    });
 
-    $scope.createGame = function () {
-      gameManager.createGame($scope.gameOptions);
+    $scope.goToGame = function(gameOptions) {
+      gameManager.createGame(gameOptions);
     };
   }])
-  .controller('GameCtrl', ['$scope', 'gameManager', function($scope, gameManager) {
+  .controller('HtmlCtrl', ['$scope', 'gameManager', function ($scope, gameManager) {
+    $scope.createGame = function (options) {
+      gameManager.createGame(options);
+    };
+  }])
+  .controller('GameCtrl', ['$scope', 'gameManager', '$stateParams', function($scope, gameManager, $stateParams) {
     $scope.game = gameManager.getGame();
-
+    $scope.game.startTimer();
     $scope.open = function(cell) {
       gameManager.openCell(cell);
     }
@@ -167,4 +152,10 @@ angular.module('game', ['gameMemory', 'ui.router'])
     gameManager.assertFinished();
     $scope.openedCount = gameManager.getGame().getOpenedCount();
     $scope.turnsCount = gameManager.getGame().getTurnsCount();
+    $scope.time = gameManager.getGame().time;
+    $scope.gameOptions = gameManager.getGame().options;
+
+    $scope.goToGame = function(gameOptions) {
+      gameManager.createGame(gameOptions);
+    }
   }]);
