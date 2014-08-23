@@ -1,12 +1,22 @@
-<h1>Игра началась <small> {{ game.getOpenedCount() }} / {{ game.count }} открыто</small></h1>
-<h2> {{game.style.description}} </h2>
-<div class="field">
-	<div ng-repeat="row in game.getRows()" class="row">
-		<div ng-repeat="cell in row" class="cell">
-			<span
-				ng-click="open(cell)"
-				ng-class="{ 'opened': cell.opened }"
-				class="{{game.style.name}} image {{ cell.opened ? 'image-' + cell.elem : (cell.beenOpen ? 'been-open' : 'closed') }}"></span>
+<h1>Игра началась </h1>
+
+<div class="row">
+	<div class="pull-left">
+		<div ng-repeat="row in game.getRows()" class="row">
+			<div ng-repeat="cell in row" class="cell">
+				<span
+					ng-click="open(cell)"
+					ng-class="{ 'opened': cell.opened }"
+					class="{{game.style.name}} image {{ cell.opened ? 'image-' + cell.elem : (cell.beenOpen ? 'been-open' : 'closed') }}"></span>
+			</div>
 		</div>
+	</div>
+	<div class="col-lg-3">
+		<p> {{game.style.description}} </p>
+		<small> Открыто {{ game.getOpenedCount() }} из {{ game.count }}</small>
+		<br/>
+		<small> Ходов: {{ game.getTurnsCount() }} </small>
+		<br/>
+		<small> {{ game.time }} </small>
 	</div>
 </div>

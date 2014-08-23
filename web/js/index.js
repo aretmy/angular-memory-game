@@ -186,6 +186,8 @@ angular.module('game', ['gameMemory', 'ui.router'])
   }])
   .controller('GameCtrl', ['$scope', 'gameManager', '$stateParams', function($scope, gameManager, $stateParams) {
     $scope.game = gameManager.getGame();
+
+    new Image().src = 'images/' + $scope.game.style.name + '/sprite.png';
     $scope.game.startTimer();
     $scope.open = function(cell) {
       gameManager.openCell(cell);

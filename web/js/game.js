@@ -102,7 +102,7 @@ angular.module('gameMemory', [])
         }
         for (var i = 0; i < this.width; i++) {
           for (var j = 0; j < this.height; j++) {
-            cells.push({ x: i, y: j });
+            cells.push({ x: j, y: i });
           }
         }
 
