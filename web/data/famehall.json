@@ -6,7 +6,7 @@
       "mode": {
         "width": 6,
         "height": 6,
-        "count": 8
+        "style": "summer"
       }
     },
     {
@@ -15,7 +15,7 @@
       "mode": {
         "width": 5,
         "height": 6,
-        "count": 6
+        "style": "food"
       }
     },
     {
@@ -24,7 +24,7 @@
       "mode": {
         "width": 6,
         "height": 5,
-        "count": 6
+        "style": "food"
       }
     },
     {
@@ -33,7 +33,7 @@
       "mode": {
         "width": 6,
         "height": 6,
-        "count": 7
+        "style": "summer"
       }
     },
     {
@@ -42,7 +42,7 @@
       "mode": {
         "width": 5,
         "height": 6,
-        "count": 7
+        "style": "summer"
       }
     }
   ],
@@ -54,7 +54,7 @@
       "mode": {
         "width": 6,
         "height": 6,
-        "count": 8
+        "style": "food"
       }
     },
     {
@@ -64,7 +64,7 @@
       "mode": {
         "width": 5,
         "height": 6,
-        "count": 5
+        "style": "food"
       }
     },
     {
@@ -74,7 +74,7 @@
       "mode": {
         "width": 6,
         "height": 5,
-        "count": 6
+        "style": "summer"
       }
     },
     {
@@ -84,7 +84,7 @@
       "mode": {
         "width": 6,
         "height": 6,
-        "count": 7
+        "style": "food"
       }
     },
     {
@@ -94,7 +94,7 @@
       "mode": {
         "width": 5,
         "height": 6,
-        "count": 7
+        "style": "summer"
       }
     }
   ]

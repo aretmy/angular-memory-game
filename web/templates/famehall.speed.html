@@ -9,7 +9,7 @@
 		<tr ng-repeat="user in famehall.speed">
 			<td>{{ user.name }}</td>
 			<td> {{ user.time }}</td>
-			<td> Размер: {{ user.mode.width }}x{{user.mode.height}} Ячеек: {{user.mode.count}} <a ng-click="goToGame(user.mode)">Превзойти</a></td>
+			<td> Размер: {{ user.mode.width }}x{{user.mode.height}} Картинки: {{user.mode.style}} <a ng-click="goToGame(user.mode)">Превзойти</a></td>
 		</tr>
 	</tbody>
 </table>

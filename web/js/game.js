@@ -45,7 +45,7 @@ angular.module('gameMemory', [])
           self.first = null;
           self.second = null;
           self.timeout = null;
-        }, 1000);
+        }, 1100);
         return false;
       }
     }
@@ -67,10 +67,12 @@ angular.module('gameMemory', [])
       this.width = options.width;
       this.height = options.height;
       this.count = this.width * this.height / 2;
+      this.style = Game.styles[options.style];
 
       this.options = {
         width: this.width,
-        height: this.height
+        height: this.height,
+        style: options.style
       };
 
       this.command = new OpenCommand(this);
@@ -79,8 +81,10 @@ angular.module('gameMemory', [])
       this.started = false;
 
       this.time = 0;
-      this.style = 'summer';
-      this.images = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19];
+      this.images = [];
+      for(var i = 0; i < this.style.count; i++) {
+        this.images.push(i);
+      }
 
       map = [];
 
@@ -114,7 +118,6 @@ angular.module('gameMemory', [])
           addElem(one, elem);
           addElem(two, elem);
         }
-        console.log(stat);
       }
 
       this.open = function (cell) {
@@ -168,6 +171,90 @@ angular.module('gameMemory', [])
 
     Game.getDefaults = function() {
       return angular.copy(defaults);
+    }
+
+    Game.styles = {
+      summer: {
+        name: 'summer',
+        count: 20,
+        description: 'Лето'
+      },
+      food: {
+        name: 'food',
+        count: 20,
+        description: 'Еда'
+      },
+      summerFood: {
+        name: 'summer-food',
+        count: 40,
+        description: 'Лето и еда'
+      }
+    };
+
+    Game.modes = [
+      {
+        width: 2,
+        height: 2,
+        name: 'Легкая игра',
+        cssClass: 'btn-info',
+        minCount: 2,
+        section: 'easy'
+      },
+      {
+        width: 4,
+        height: 4,
+        name: 'Легкая игра',
+        cssClass: 'btn-info',
+        minCount: 8,
+        section: 'easy'
+      },
+      {
+        width: 6,
+        height: 5,
+        name: 'Средняя игра',
+        cssClass: 'btn-success',
+        minCount: 15,
+        section: 'middle'
+      },
+      {
+        width: 6,
+        height: 6,
+        name: 'Средняя игра',
+        cssClass: 'btn-success',
+        minCount: 18,
+        section: 'middle'
+      },
+      {
+        width: 8,
+        height: 8,
+        name: 'Сложная игра',
+        cssClass: 'btn-danger',
+        minCount: 32,
+        section: 'hard'
+      },
+      {
+        width: 9,
+        height: 8,
+        name: 'Сложная игра',
+        cssClass: 'btn-danger',
+        minCount: 36,
+        section: 'hard'
+      }
+    ];
+
+    Game.getModes = function(style) {
+      var result = [];
+      style = Game.styles[style];
+      if(!style) {
+        return result;
+      }
+
+      for(var i = 0, mode; mode = Game.modes[i]; i++) {
+        if(mode.minCount <= style.count) {
+          result.push(mode);
+        }
+      }
+      return result;
     }
 
     function addElem(coords, elem) {

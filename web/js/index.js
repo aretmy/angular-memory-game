@@ -108,6 +108,30 @@ angular.module('game', ['gameMemory', 'ui.router'])
        },
        loadFamehall: function() {
          return $http({method: 'GET', url: 'data/famehall.json'});
+       },
+       getStyles: function() {
+         return Game.styles;
+       },
+       getModes: function(style) {
+         var modes = Game.getModes(style),
+            sections = {},
+            result = [];
+
+         for(var i = 0, mode; mode = modes[i]; i++) {
+           var section = mode.section;
+
+           if(!sections[section]) {
+            sections[section] = [];
+            result.push(sections[section]);
+           }
+
+           sections[section].push(mode);
+         }
+
+         return result;
+       },
+       repeatGame: function() {
+         this.createGame(this.game.options);
        }
      };
   }])
@@ -125,6 +149,15 @@ angular.module('game', ['gameMemory', 'ui.router'])
       }
     }
   }])
+  .directive('myTitle', [function() {
+    return {
+      restrict: 'A',
+      scope: '=',
+      link: function(scope, elem, attrs) {
+        elem.attr('title', attrs.myTitle);
+      }
+    }
+  }])
   .controller('FamehallCtrl', ['$scope', 'gameManager', function($scope, gameManager) {
     $scope.famehall = {};
 
@@ -137,8 +170,18 @@ angular.module('game', ['gameMemory', 'ui.router'])
     };
   }])
   .controller('HtmlCtrl', ['$scope', 'gameManager', function ($scope, gameManager) {
+    $scope.styles = gameManager.getStyles();
+    $scope.style = null;
+    $scope.modes = [];
+
     $scope.createGame = function (options) {
+      options.style = $scope.style;
       gameManager.createGame(options);
+    };
+
+    $scope.chooseStyle = function(style) {
+      $scope.style = style;
+      $scope.modes = gameManager.getModes($scope.style);
     };
   }])
   .controller('GameCtrl', ['$scope', 'gameManager', '$stateParams', function($scope, gameManager, $stateParams) {
@@ -155,7 +198,7 @@ angular.module('game', ['gameMemory', 'ui.router'])
     $scope.time = gameManager.getGame().time;
     $scope.gameOptions = gameManager.getGame().options;
 
-    $scope.goToGame = function(gameOptions) {
-      gameManager.createGame(gameOptions);
+    $scope.repeatGame = function() {
+      gameManager.repeatGame();
     }
   }]);

@@ -1,11 +1,12 @@
 <h1>Игра началась <small> {{ game.getOpenedCount() }} / {{ game.count }} открыто</small></h1>
+<h2> {{game.style.description}} </h2>
 <div class="field">
 	<div ng-repeat="row in game.getRows()" class="row">
 		<div ng-repeat="cell in row" class="cell">
 			<span
 				ng-click="open(cell)"
 				ng-class="{ 'opened': cell.opened }"
-				class="{{game.style}} image {{ cell.opened ? 'image-' + cell.elem : (cell.beenOpen ? 'been-open' : 'closed') }}"></span>
+				class="{{game.style.name}} image {{ cell.opened ? 'image-' + cell.elem : (cell.beenOpen ? 'been-open' : 'closed') }}"></span>
 		</div>
 	</div>
 </div>
