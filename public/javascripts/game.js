@@ -1,86 +1,119 @@
 angular.module('gameMemory', [])
-  .factory('OpenCommand', ['$timeout', function($timeout) {
+  .factory('OpenCommand', ['$timeout', '$rootScope', function ($timeout, $rootScope) {
+
+    var STATE_INIT = 0,
+      STATE_FIRST_OPENED = 1,
+      STATE_SECOND_OPENED = 2;
+
     function OpenCommand(game) {
       this.game = game;
+
       this.first = null;
       this.second = null;
+
       this.turnsCount = 0;
       this.openedCount = 0;
 
-      this.fresh = null;
-      this.lucky = null;
+      this.state = STATE_INIT;
+
+      this.clear = this.clear.bind(this);
     }
 
     OpenCommand.prototype = {
-      execute: function(cell) {
-        if(this.first && !this.second) {
-          this.turnsCount++;
-          return this.openSecond(cell);
-        } else if(!this.second) {
-          return this.openFirst(cell);
+      execute: function (cell) {
+        if (cell.opened) {
+          return;
         }
-        return false;
+        switch (this.state) {
+          case STATE_INIT:
+            this.openFirst(cell);
+          case STATE_FIRST_OPENED:
+            this.openSecond(cell);
+        }
       },
-      openFirst: function(cell) {
-        var self = this;
-        cell.opened = true;
+      openFirst: function (cell) {
+        open(cell);
         this.first = cell;
-        return false;
+        this.state = STATE_FIRST_OPENED;
+        $rootScope.$broadcast('clickedFirst', { cell: cell });
       },
-      openSecond: function(cell) {
+      openSecond: function (cell) {
         var self = this;
 
-        if(cell === this.first) {
-          return false;
+        if (cell === this.first) {
+          return;
         }
+
+        $rootScope.$broadcast('clickedSecond', { cell: cell });
+
         this.second = cell;
-        cell.opened = true;
+        open(cell);
 
         var lucky = !this.first.beenOpen && !cell.beenOpen;
 
-        cell.beenOpen = true;
-        this.first.beenOpen = true;
-        if(this.first.elem == cell.elem) {
+        markOpen(cell);
+        markOpen(this.first);
+
+        if (equal(this.first, cell)) {
+          lucky && $rootScope.$broadcast('luckyOpening', { elem: cell.elem });
 
           this.first = null;
           this.second = null;
           this.openedCount++;
-          this.fresh = cell.elem;
-
-          if(lucky) {
-            this.lucky = cell.elem;
-            $timeout(function() {
-              self.lucky = null;
-            }, 2000);
-          }
-
-          $timeout(function() {
-            self.fresh = null;
-          }, 2000);
-          return true;
+          this.state = STATE_INIT;
+          $rootScope.$broadcast('elementOpened', { elem: cell.elem });
+          return;
         }
-        $timeout(function() {
-          self.first.opened = false;
-          self.second.opened = false;
-          self.first = null;
-          self.second = null;
-          self.timeout = null;
-        }, 1100);
-        return false;
+
+        this.state = STATE_SECOND_OPENED;
+
+        $timeout(this.clear, 1000);
+      },
+      clear: function () {
+        close(this.first);
+        close(this.second);
+        this.first = null;
+        this.second = null;
+        this.state = STATE_INIT;
       }
+    }
+
+    function equal(one, two) {
+      return one && two && one.elem == two.elem;
+    }
+
+    function markOpen(cell) {
+      if (!cell || cell.beenOpen) {
+        return;
+      }
+
+      cell.beenOpen = true;
+    }
+
+    function open(cell) {
+      cell && (cell.opened = true);
+      $rootScope.$broadcast('cellOpened', { cell: cell });
+    }
+
+    function close(cell) {
+      cell && (cell.opened = false);
+      $rootScope.$broadcast('cellClosed', { cell: cell });
     }
 
     return OpenCommand;
   }])
   .value('styles', [])
   .value('modes', [])
-  .factory('Game', ['OpenCommand', '$interval', 'styles', 'modes', function (OpenCommand, $interval, styles, modes) {
+  .factory('Game', ['OpenCommand', '$interval', 'styles', 'modes', '$rootScope', function (OpenCommand, $interval, styles, modes, $rootScope) {
 
     var map = [],
-        defaults = {
-          width: 6,
-          height: 6
-        };
+      defaults = {
+        width: 6,
+        height: 6
+      },
+      STATE_INIT = 0,
+      STATE_STARTED = 1,
+      STATE_FINISHED = 2;
 
     function Game(options) {
 
@@ -98,13 +131,17 @@ angular.module('gameMemory', [])
       };
 
       this.command = new OpenCommand(this);
-      this.remaining = this.width * this.height;
-      this.finished = false;
-      this.started = false;
+
+      this.state = STATE_INIT;
+
+      this.counters = {
+        turns: 0,
+        opened: 0
+      };
 
       this.time = 0;
       this.images = [];
-      for(var i = 0; i < this.style.count; i++) {
+      for (var i = 0; i < this.style.count; i++) {
         this.images.push(i);
       }
 
@@ -116,11 +153,10 @@ angular.module('gameMemory', [])
 
       this.generate = function () {
         var cells = [],
-            allImages = this.images.slice(),
-            images = [];
+          images = [];
 
-        for(var i = 0; i < this.count; i++) {
-          images.push(pullRandom(allImages));
+        for (var i = 0; i < this.count; i++) {
+          images.push(pullRandom(this.images));
         }
         for (var i = 0; i < this.width; i++) {
           for (var j = 0; j < this.height; j++) {
@@ -131,8 +167,8 @@ angular.module('gameMemory', [])
         var stat = {};
         while (cells.length) {
           var elem = pullRandom(images),
-              one = pullRandom(cells),
-              two = pullRandom(cells);
+            one = pullRandom(cells),
+            two = pullRandom(cells);
 
           stat[elem] || (stat[elem] = 0);
           stat[elem]++;
@@ -143,74 +179,61 @@ angular.module('gameMemory', [])
       }
 
       this.open = function (cell) {
-        if(!this.started) {
-          this.started = true;
-        }
-        if(this.finished) {
+        if (this.isFinished()) {
           return false;
         }
-        if(this.command.execute(cell)) {
-          this.remaining -= 2;
-        }
-        if(this.remaining == 0) {
-          this.finished = true;
-          this.stopTimer();
-        }
-      }
 
-      this.openAll = function() {
-        for(var i = 0, row; row = map[i]; i++) {
-          for(var j = 0, cell; cell = row[j]; j++) {
-            cell.opened = true;
-          }
-        }
+        this.command.execute(cell);
       }
 
       this.getRows = function () {
         return map;
       }
 
-      this.getTurnsCount = function() {
-        return this.command.turnsCount;
-      }
-
-      this.getOpenedCount = function() {
-        return this.command.openedCount;
-      }
-
-      this.startTimer = function() {
+      this.startTimer = function () {
         var self = this;
-        this.interval = $interval(function() {
+        this.interval = $interval(function () {
           self.time++;
         }, 1000);
       }
 
-      this.stopTimer = function() {
+      this.stopTimer = function () {
         $interval.cancel(this.interval);
       }
 
-      this.hasFreshOpened = function() {
-        return this.command.fresh !== null;
+      this.start = function () {
+        var self = this;
+        this.startTimer();
+        this.state = STATE_STARTED;
+
+        $rootScope.$on('clickedSecond', function () {
+          self.counters.turns++;
+        });
+        $rootScope.$on('elementOpened', function () {
+          self.counters.opened++;
+
+          if (self.counters.opened == self.count) {
+            self.state = STATE_FINISHED;
+            self.stopTimer();
+            $rootScope.$broadcast('gameFinished', { game: self });
+          }
+        });
       }
 
-      this.getFreshOpened = function() {
-        return this.command.fresh;
+      this.isFinished = function () {
+        return this.state == STATE_FINISHED;
       }
     }
 
-    Game.getDefaults = function() {
-      return angular.copy(defaults);
-    }
-
-    Game.getModes = function(style) {
+    Game.getModes = function (style) {
       var result = [];
       style = styles[style];
-      if(!style) {
+      if (!style) {
         return result;
       }
 
-      for(var i = 0, mode; mode = modes[i]; i++) {
-        if(mode.minCount <= style.count) {
+      for (var i = 0, mode; mode = modes[i]; i++) {
+        if (mode.minCount <= style.count) {
           result.push(mode);
         }
       }
@@ -223,17 +246,18 @@ angular.module('gameMemory', [])
 
       map[x] || (map[x] = []);
       map[x][y] = {
+        id: generateCellId(),
         elem: elem,
         opened: false,
         beenOpen: false
       };
     }
 
-    function shuffle(array) {
-      for(var i = 0; i < array.length * 2; i++) {
-        array.push(pullRandom(array));
-      }
+    function generateCellId() {
+      return 'cell-' + generateCellId.i++;
     }
+
+    generateCellId.i = 0;
 
     function pullRandom(array) {
       var index = Math.floor(Math.random() * array.length);

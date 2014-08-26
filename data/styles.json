@@ -2,16 +2,16 @@
   "summer": {
     "name": "summer",
     "count": 20,
-    "description": "Лето"
+    "description": "Summer"
   },
   "food": {
     "name": "food",
     "count": 20,
-    "description": "Еда"
+    "description": "Food"
   },
   "summerFood": {
     "name": "summer-food",
     "count": 40,
-    "description": "Лето и еда"
+    "description": "Summer & Food"
   }
 }

@@ -10,6 +10,15 @@
 	padding: 0px;
 }
 
+.popup-text {
+    position: absolute;
+    left: 42%;
+    top: 48%;
+    font-size: 100px;
+    color: orange;
+    text-align: center;
+}
+
 .cell {
 	width: 64px;
 	height: 64px;
@@ -34,7 +43,7 @@
 
 .been-open {
 	background-image: none !important;
-	background-color: #555 !important;
+	background-color: #000 !important;
 }
 
 .summer { background: url('../images/summer/sprite.png') no-repeat top left; width: 60px; height: 60px; }

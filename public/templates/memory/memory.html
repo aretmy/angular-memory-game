@@ -1,0 +1,7 @@
+<div>
+	<div ng-repeat="row in game.getRows()">
+		<div ng-repeat="cell in row" class="cell">
+			<span ng-click="open(cell)" class="image {{::game.style.name}} {{ cell.opened ? 'opened' : '' }} {{ cell.opened ? 'image-' + cell.elem : (cell.beenOpen ? 'been-open' : 'closed') }}"></span>
+		</div>
+	</div>
+</div>

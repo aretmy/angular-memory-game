@@ -1,4 +1,4 @@
-angular.module('game', ['gameMemory', 'ui.router', 'ngAnimate'])
+angular.module('game', ['gameMemory', 'ui.router', 'ngAnimate', 'ngTouch'])
   .config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise('/');
     $stateProvider
@@ -70,7 +70,51 @@ angular.module('game', ['gameMemory', 'ui.router', 'ngAnimate'])
 
     };
   }])
-  .factory('gameManager', ['shared', '$state', '$timeout', 'Game', '$http', 'styles', function(shared, $state, $timeout, Game, $http, styles) {
+  .directive('memory', ['$timeout', function($timeout) {
+    return {
+      restrict: 'E',
+      replace: true,
+      templateUrl: 'templates/memory/memory.html',
+      controller: function($scope) {
+        var message = null;
+        this.setMessage = function(msg) {
+          message = msg;
+        }
+
+        $scope.$on('luckyOpening', function() {
+          message && (message.message = 'Lucky');
+          $timeout(function() {
+            message && (message.message = null);
+          }, 5000);
+        });
+      },
+      link: function(scope, element, attrs) {
+
+      }
+    }
+  }])
+  .directive('gameMessage', [function() {
+    return {
+      restrict: 'E',
+      require: '^memory',
+      replace: true,
+      templateUrl: 'templates/memory/gameMessage.html',
+      require: '^memory',
+      link: function(scope, elem, attrs, ctrl) {
+        ctrl.setMessage(scope);
+      }
+    }
+  }])
+  .filter('time', [function() {
+    return function(seconds) {
+      var hours = Math.floor(seconds / 3600),
+          minutes = Math.floor((seconds % 3600) / 60),
+          sec = seconds % 60;
+
+      return ((hours > 0) ? hours : '') + ('0' + minutes).substr(-2) + ':' + ('0' + sec).substr(-2);
+    }
+  }])
+  .factory('gameManager', ['shared', '$state', '$timeout', 'Game', '$http', 'styles', '$rootScope', function(shared, $state, $timeout, Game, $http, styles, $rootScope) {
      return {
        getOptions: function() {
          return shared.get('options', Game.getDefaults());
@@ -80,6 +124,13 @@ angular.module('game', ['gameMemory', 'ui.router', 'ngAnimate'])
          shared.set('options', options);
          game.generate();
          $state.go('gameStarted');
+         $rootScope.$on('gameFinished', function(ev, data) {
+           if(data.game === game) {
+             $timeout(function() {
+               $state.go('gameFinished');
+             }, 2000);
+           }
+         })
        },
        getGame: function() {
          if(!this.game) {
@@ -94,17 +145,13 @@ angular.module('game', ['gameMemory', 'ui.router', 'ngAnimate'])
            return;
          }
          this.game.open(cell);
-
-         if(this.game.finished) {
-           $timeout(function() {
-             $state.go('gameFinished');
-           }, 2000);
-         }
        },
        assertFinished: function() {
-         if(!this.game || !this.game.finished) {
+         if(!this.game || !this.game.isFinished()) {
            $state.go('game');
+           return false;
          }
+         return true;
        },
        loadFamehall: function() {
          return $http({method: 'GET', url: 'data/famehall.json'});
@@ -188,18 +235,21 @@ angular.module('game', ['gameMemory', 'ui.router', 'ngAnimate'])
   .controller('GameCtrl', ['$scope', 'gameManager', '$stateParams', function($scope, gameManager, $stateParams) {
     $scope.game = gameManager.getGame();
 
-    new Image().src = 'images/' + $scope.game.style.name + '/sprite.png';
-    $scope.game.startTimer();
-    $scope.open = function(cell) {
-      gameManager.openCell(cell);
+    if($scope.game) {
+      new Image().src = 'images/' + $scope.game.style.name + '/sprite.png';
+      $scope.game.start();
+      $scope.open = function(cell) {
+        gameManager.openCell(cell);
+      }
     }
   }])
   .controller('FinishCtrl', ['$scope', 'gameManager', function($scope, gameManager) {
-    gameManager.assertFinished();
-    $scope.openedCount = gameManager.getGame().getOpenedCount();
-    $scope.turnsCount = gameManager.getGame().getTurnsCount();
-    $scope.time = gameManager.getGame().time;
-    $scope.gameOptions = gameManager.getGame().options;
+    if(!gameManager.assertFinished()) {
+      return false;
+    }
+
+    var game = gameManager.getGame();
+    $scope.game = game
 
     $scope.repeatGame = function() {
       gameManager.repeatGame();

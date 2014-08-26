@@ -1,3 +1,6 @@
-<h1>Поздравляем, вы выиграли!!! </h1>
-<h2> Вы открыли {{ openedCount }} пар за {{ turnsCount }} ходов. Время {{ time }} секунд. </h2>
-<a ng-click="repeatGame()"> Сыграть еще раз! </a>
+<div class="center-block">
+	<h1 class="text-center">Поздравляем, вы открыли все ячейки!</h1>
+	<h2 class="text-center"> Вы открыли <ng-pluralize count="game.count" when="{ few: 'пары', many: 'пар' }"> {{::game.count}} </ng-pluralize> за {{::game.counters.turns }} ходов. Ваше время {{::game.time | time }}. </h2>
+	<img class="img-circle center-block" ng-src="images/{{::game.style.name}}/icon.png"/>
+	<a class="center-block btn btn-success" style="width: 150px;" ng-click="repeatGame()"> Сыграть еще раз! </a>
+</div>

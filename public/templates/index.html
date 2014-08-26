@@ -1,4 +1,4 @@
-<div class="settings row">
+<div class="settings row center-block" style="width: 420px;">
 	<h1> Игра "Память" </h1>
 	<span class="help-block"> Выберите тип игры </span>
 
@@ -7,15 +7,14 @@
 	</a>
 	<hr/>
 	<div ng-if="style">
-		<h2>{{ styles[style].description }}</h2>
+		<h2 class="text-center">{{ styles[style].description }}</h2>
 		<div ng-repeat="items in modes">
 			<div class="row" >
-				<div class="col-lg-3 col-sm-2" ng-repeat="item in items">
+				<div class="col-lg-6 col-sm-6" ng-repeat="item in items">
 					<a class="btn {{ item.section | modeButtonClass }} btn-lg btn-block" ng-click="createGame({ width: item.width, height: item.height})"> {{item.name}} ({{item.width}}x{{item.height}})</a>
 				</div>
 			</div>
 			<hr/>
 		</div>
 	</div>
-
 </div>
