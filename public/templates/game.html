@@ -1,21 +1,21 @@
 <div>
-	<div class="center-block" style="width: {{::game.width * 64 }}px">
+	<div class="center-block game-{{::game.width}} game">
         <div class="clearfix row">
-            <div class="col-lg-4">
-                <h2 class="text-left"> {{ game.time | time }} </h2>
+            <div class="col-lg-4 col-sm-4 col-xs-4 time-block">
+                <span class="text-left"> {{ game.time | time }} </span>
             </div>
 
-            <div class="col-lg-4">
-                <h2 class="text-center"> {{ game.counters.opened }} / {{ game.count }} </h2>
+            <div class="col-lg-4 col-sm-4 col-xs-4 score-block">
+                <span class="text-center"> {{ game.counters.opened }} / {{ game.count }} </span>
             </div>
 
-            <div class="col-lg-4">
-                <h2 class="text-right">
+            <div class="col-lg-4 col-sm-4 col-xs-4 turns-block">
+                <span class="text-right">
                 {{ game.counters.turns }}
-                </h2>
+                </span>
             </div>
         </div>
-        <memory game="game"></memory>
+        <memory game="game" class="center-block" style="width: {{::game.width * 64}}px"></memory>
 	</div>
 
 </div>

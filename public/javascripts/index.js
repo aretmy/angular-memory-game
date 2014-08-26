@@ -87,9 +87,6 @@ angular.module('game', ['gameMemory', 'ui.router', 'ngAnimate', 'ngTouch'])
             message && (message.message = null);
           }, 5000);
         });
-      },
-      link: function(scope, element, attrs) {
-
       }
     }
   }])
