@@ -1,0 +1,17 @@
+{
+  "summer": {
+    "name": "summer",
+    "count": 20,
+    "description": "Summer"
+  },
+  "food": {
+    "name": "food",
+    "count": 20,
+    "description": "Food"
+  },
+  "summerFood": {
+    "name": "summer-food",
+    "count": 40,
+    "description": "Summer & Food"
+  }
+}

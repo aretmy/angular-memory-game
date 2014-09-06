@@ -1,0 +1,19 @@
+.new-open {
+	transition: linear 1s;
+}
+
+.new-open.ng-enter {
+	opacity: 0;
+}
+
+.new-open.ng-enter-active {
+	opacity: 1;
+}
+
+.new-open.ng-leave {
+	opacity: 1;
+}
+
+.new-open.ng-leave-active {
+	opacity: 0;
+}

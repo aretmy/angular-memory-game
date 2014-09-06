@@ -1,0 +1,7 @@
+<div class="center-block">
+	<h1 class="text-center">Поздравляем, вы открыли все ячейки!</h1>
+	<h2 class="text-center"> Вы открыли {{::game.count}} <ng-pluralize count="game.count" when="{ few: 'пары', many: 'пар' }"></ng-pluralize> за
+        {{::game.counters.turns }} <ng-pluralize count="game.counters.turns" when="{ one: 'ход', few: 'хода', many: 'ходов'}"> </ng-pluralize>. Ваше время {{::game.time | time }}. </h2>
+	<img class="img-circle center-block" ng-src="images/{{::game.style.name}}/icon.png"/>
+	<a class="center-block btn btn-success" style="width: 150px;" ng-click="repeatGame()"> Сыграть еще раз! </a>
+</div>

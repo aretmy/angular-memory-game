@@ -1,0 +1,325 @@
+.style-link {
+	display: inline-block;
+	cursor: pointer;
+	border-radius: 64px;
+	padding: 1px;
+}
+
+.style-link.selected {
+	border: #00f 1px solid;
+	padding: 0px;
+}
+
+.popup-text {
+    position: absolute;
+    left: 42%;
+    top: 48%;
+    font-size: 100px;
+    color: orange;
+    text-align: center;
+}
+
+.game-row {
+    clear: both;
+}
+
+
+.been-open {
+    background-image: none !important;
+    background-color: #000 !important;
+}
+
+@media (min-width: 768px) {
+
+    .game {
+        min-width: 256px;
+    }
+
+    .game-4 {
+        width: 256px;
+    }
+
+    .game-6 {
+        width: 384px;
+    }
+
+    .game-8 {
+        width: 512px;
+    }
+
+    .game-9 {
+        width: 576px;
+    }
+
+    .time-block span {
+        display: block;
+        font-size: 20px;
+    }
+
+    .score-block span {
+        display: block;
+        font-size: 20px;
+    }
+
+    .turns-block span {
+        display: block;
+        font-size: 20px;
+    }
+
+    .cell {
+        width: 64px;
+        height: 64px;
+        float: left;
+    }
+
+    .cell > span {
+        margin: 2px;
+        width: 60px;
+        height: 60px;
+        border-radius: 30px;
+
+        display: block;
+
+        cursor: pointer;
+        text-align: center;
+    }
+
+    .closed {
+        background-image: url('../images/question_60.png') !important;
+    }
+
+
+    .summer { background: url('../images/summer/sprite.png') no-repeat top left; width: 60px; height: 60px; }
+    .summer.image-0 { background-position: 0px 0px;  }
+    .summer.image-1 { background-position: -60px 0px;  }
+    .summer.image-2 { background-position: -120px 0px;  }
+    .summer.image-3 { background-position: -180px 0px;  }
+    .summer.image-4 { background-position: -240px 0px;  }
+    .summer.image-5 { background-position: -300px 0px;  }
+    .summer.image-6 { background-position: -360px 0px;  }
+    .summer.image-7 { background-position: -420px 0px;  }
+    .summer.image-8 { background-position: -480px 0px;  }
+    .summer.image-9 { background-position: -540px 0px;  }
+    .summer.image-10 { background-position: -600px 0px;  }
+    .summer.image-11 { background-position: -660px 0px;  }
+    .summer.image-12 { background-position: -720px 0px;  }
+    .summer.image-13 { background-position: -780px 0px;  }
+    .summer.image-14 { background-position: -840px 0px;  }
+    .summer.image-15 { background-position: -900px 0px;  }
+    .summer.image-16 { background-position: -960px 0px;  }
+    .summer.image-17 { background-position: -1020px 0px;  }
+    .summer.image-18 { background-position: -1080px 0px;  }
+    .summer.image-19 { background-position: -1140px 0px;  }
+
+    .food { background: url('../images/food/sprite.png') no-repeat top left; width: 60px; height: 60px;  }
+    .food.image-0 { background-position: 0px 0px;  }
+    .food.image-1 { background-position: -60px 0px;  }
+    .food.image-2 { background-position: -120px 0px;  }
+    .food.image-3 { background-position: -180px 0px;  }
+    .food.image-4 { background-position: -240px 0px;  }
+    .food.image-5 { background-position: -300px 0px;  }
+    .food.image-6 { background-position: -360px 0px;  }
+    .food.image-7 { background-position: -420px 0px;  }
+    .food.image-8 { background-position: -480px 0px;  }
+    .food.image-9 { background-position: -540px 0px;  }
+    .food.image-10 { background-position: -600px 0px;  }
+    .food.image-11 { background-position: -660px 0px;  }
+    .food.image-12 { background-position: -720px 0px;  }
+    .food.image-13 { background-position: -780px 0px;  }
+    .food.image-14 { background-position: -840px 0px;  }
+    .food.image-15 { background-position: -900px 0px;  }
+    .food.image-16 { background-position: -960px 0px;  }
+    .food.image-17 { background-position: -1020px 0px;  }
+    .food.image-18 { background-position: -1080px 0px;  }
+    .food.image-19 { background-position: -1140px 0px;  }
+
+
+    .summer-food { background: url('../images/summer-food/sprite.png') no-repeat top left; width: 60px; height: 60px;  }
+    .summer-food.image-0 { background-position: 0px 0px;  }
+    .summer-food.image-1 { background-position: -60px 0px;  }
+    .summer-food.image-2 { background-position: -120px 0px;  }
+    .summer-food.image-3 { background-position: -180px 0px;  }
+    .summer-food.image-4 { background-position: -240px 0px;  }
+    .summer-food.image-5 { background-position: -300px 0px;  }
+    .summer-food.image-6 { background-position: -360px 0px;  }
+    .summer-food.image-7 { background-position: -420px 0px;  }
+    .summer-food.image-8 { background-position: -480px 0px;  }
+    .summer-food.image-9 { background-position: -540px 0px;  }
+    .summer-food.image-10 { background-position: -600px 0px;  }
+    .summer-food.image-11 { background-position: -660px 0px;  }
+    .summer-food.image-12 { background-position: -720px 0px;  }
+    .summer-food.image-13 { background-position: -780px 0px;  }
+    .summer-food.image-14 { background-position: -840px 0px;  }
+    .summer-food.image-15 { background-position: -900px 0px;  }
+    .summer-food.image-16 { background-position: -960px 0px;  }
+    .summer-food.image-17 { background-position: -1020px 0px;  }
+    .summer-food.image-18 { background-position: -1080px 0px;  }
+    .summer-food.image-19 { background-position: -1140px 0px;  }
+    .summer-food.image-20 { background-position: -1200px 0px;  }
+    .summer-food.image-21 { background-position: -1260px 0px;  }
+    .summer-food.image-22 { background-position: -1320px 0px;  }
+    .summer-food.image-23 { background-position: -1380px 0px;  }
+    .summer-food.image-24 { background-position: -1440px 0px;  }
+    .summer-food.image-25 { background-position: -1500px 0px;  }
+    .summer-food.image-26 { background-position: -1560px 0px;  }
+    .summer-food.image-27 { background-position: -1620px 0px;  }
+    .summer-food.image-28 { background-position: -1680px 0px;  }
+    .summer-food.image-29 { background-position: -1740px 0px;  }
+    .summer-food.image-30 { background-position: -1800px 0px;  }
+    .summer-food.image-31 { background-position: -1860px 0px;  }
+    .summer-food.image-32 { background-position: -1920px 0px;  }
+    .summer-food.image-33 { background-position: -1980px 0px;  }
+    .summer-food.image-34 { background-position: -2040px 0px;  }
+    .summer-food.image-35 { background-position: -2100px 0px;  }
+    .summer-food.image-36 { background-position: -2160px 0px;  }
+    .summer-food.image-37 { background-position: -2220px 0px;  }
+    .summer-food.image-38 { background-position: -2280px 0px;  }
+    .summer-food.image-39 { background-position: -2340px 0px;  }
+}
+
+@media (max-width: 768px) {
+
+    .game {
+        min-width: 192px;
+    }
+
+    .game-4 {
+        width: 128px;
+    }
+
+    .game-6 {
+        width: 192px;
+    }
+
+    .game-8 {
+        width: 256px;
+    }
+
+    .game-9 {
+        width: 288px;
+    }
+
+    .time-block span {
+        display: block;
+        font-size: 15px;
+    }
+
+    .score-block span {
+        display: block;
+        font-size: 15px;
+    }
+
+    .turns-block span {
+        display: block;
+        font-size: 15px;
+    }
+
+    .cell {
+        width: 32px;
+        height: 32px;
+        float: left;
+    }
+
+    .cell > span {
+        margin: 2px;
+        width: 28px;
+        height: 28px;
+        border-radius: 14px;
+
+        display: block;
+
+        cursor: pointer;
+        text-align: center;
+    }
+
+    .closed {
+        background-image: url('../images/question_28.png') !important;
+    }
+
+    .food { background: url('../images/food/28/sprite.png') no-repeat top left; width: 28px; height: 28px;  }
+    .food.image-0 { background-position: 0px 0px;  }
+    .food.image-1 { background-position: -28px 0px;  }
+    .food.image-2 { background-position: -56px 0px;  }
+    .food.image-3 { background-position: -84px 0px;  }
+    .food.image-4 { background-position: -112px 0px;  }
+    .food.image-5 { background-position: -140px 0px;  }
+    .food.image-6 { background-position: -168px 0px;  }
+    .food.image-7 { background-position: -196px 0px;  }
+    .food.image-8 { background-position: -224px 0px;  }
+    .food.image-9 { background-position: -252px 0px;  }
+    .food.image-10 { background-position: -280px 0px;  }
+    .food.image-11 { background-position: -308px 0px;  }
+    .food.image-12 { background-position: -336px 0px;  }
+    .food.image-13 { background-position: -364px 0px;  }
+    .food.image-14 { background-position: -392px 0px;  }
+    .food.image-15 { background-position: -420px 0px;  }
+    .food.image-16 { background-position: -448px 0px;  }
+    .food.image-17 { background-position: -476px 0px;  }
+    .food.image-18 { background-position: -504px 0px;  }
+    .food.image-19 { background-position: -532px 0px;  }
+
+
+    .summer { background: url('../images/summer/28/sprite.png') no-repeat top left; width: 28px; height: 28px;  }
+    .summer.image-0 { background-position: 0px 0px;  }
+    .summer.image-1 { background-position: -28px 0px;  }
+    .summer.image-2 { background-position: -56px 0px;  }
+    .summer.image-3 { background-position: -84px 0px;  }
+    .summer.image-4 { background-position: -112px 0px;  }
+    .summer.image-5 { background-position: -140px 0px;  }
+    .summer.image-6 { background-position: -168px 0px;  }
+    .summer.image-7 { background-position: -196px 0px;  }
+    .summer.image-8 { background-position: -224px 0px;  }
+    .summer.image-9 { background-position: -252px 0px;  }
+    .summer.image-10 { background-position: -280px 0px;  }
+    .summer.image-11 { background-position: -308px 0px;  }
+    .summer.image-12 { background-position: -336px 0px;  }
+    .summer.image-13 { background-position: -364px 0px;  }
+    .summer.image-14 { background-position: -392px 0px;  }
+    .summer.image-15 { background-position: -420px 0px;  }
+    .summer.image-16 { background-position: -448px 0px;  }
+    .summer.image-17 { background-position: -476px 0px;  }
+    .summer.image-18 { background-position: -504px 0px;  }
+    .summer.image-19 { background-position: -532px 0px;  }
+
+    .summer-food { background: url('../images/summer-food/28/sprite.png') no-repeat top left; width: 28px; height: 28px;  }
+    .summer-food.image-0 { background-position: 0px 0px;  }
+    .summer-food.image-1 { background-position: -28px 0px;  }
+    .summer-food.image-2 { background-position: -56px 0px;  }
+    .summer-food.image-3 { background-position: -84px 0px;  }
+    .summer-food.image-4 { background-position: -112px 0px;  }
+    .summer-food.image-5 { background-position: -140px 0px;  }
+    .summer-food.image-6 { background-position: -168px 0px;  }
+    .summer-food.image-7 { background-position: -196px 0px;  }
+    .summer-food.image-8 { background-position: -224px 0px;  }
+    .summer-food.image-9 { background-position: -252px 0px;  }
+    .summer-food.image-10 { background-position: -280px 0px;  }
+    .summer-food.image-11 { background-position: -308px 0px;  }
+    .summer-food.image-12 { background-position: -336px 0px;  }
+    .summer-food.image-13 { background-position: -364px 0px;  }
+    .summer-food.image-14 { background-position: -392px 0px;  }
+    .summer-food.image-15 { background-position: -420px 0px;  }
+    .summer-food.image-16 { background-position: -448px 0px;  }
+    .summer-food.image-17 { background-position: -476px 0px;  }
+    .summer-food.image-18 { background-position: -504px 0px;  }
+    .summer-food.image-19 { background-position: -532px 0px;  }
+    .summer-food.image-20 { background-position: -560px 0px;  }
+    .summer-food.image-21 { background-position: -588px 0px;  }
+    .summer-food.image-22 { background-position: -616px 0px;  }
+    .summer-food.image-23 { background-position: -644px 0px;  }
+    .summer-food.image-24 { background-position: -672px 0px;  }
+    .summer-food.image-25 { background-position: -700px 0px;  }
+    .summer-food.image-26 { background-position: -728px 0px;  }
+    .summer-food.image-27 { background-position: -756px 0px;  }
+    .summer-food.image-28 { background-position: -784px 0px;  }
+    .summer-food.image-29 { background-position: -812px 0px;  }
+    .summer-food.image-30 { background-position: -840px 0px;  }
+    .summer-food.image-31 { background-position: -868px 0px;  }
+    .summer-food.image-32 { background-position: -896px 0px;  }
+    .summer-food.image-33 { background-position: -924px 0px;  }
+    .summer-food.image-34 { background-position: -952px 0px;  }
+    .summer-food.image-35 { background-position: -980px 0px;  }
+    .summer-food.image-36 { background-position: -1008px 0px;  }
+    .summer-food.image-37 { background-position: -1036px 0px;  }
+    .summer-food.image-38 { background-position: -1064px 0px;  }
+    .summer-food.image-39 { background-position: -1092px 0px;  }
+}
